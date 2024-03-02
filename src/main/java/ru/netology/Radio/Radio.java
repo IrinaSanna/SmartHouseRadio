@@ -21,17 +21,16 @@ public class Radio {
         currentStationNumber = newCurrentStation;
     }
 
-    public void setNextStationNumber(int nextStation) { // переключение с 9 на 0 станцию
+    public void setSwitchFromEndToBeginning(int nextStation) { // переключение с 9 на 0 станцию
         if (nextStation > 9) {
-            setStationRange(currentStationNumber);
+            setStationRange(nextStation);
         }
     }
 
     public void setIncreaseStation(int newNextStation) { // переключение на следующую станцию
-        if (newNextStation > 9) {
-            return;
+        if (newNextStation < 9) {
+            currentStationNumber = newNextStation + 1;
         }
-        currentStationNumber = newNextStation + 1;
     }
 
     public void setPrevStationNumber(int prevStation) { // переключение с 0 на 9 станцию
@@ -41,10 +40,9 @@ public class Radio {
     }
 
     public void setDecreaseStation(int newPrevStation) { // переключение на предыдущую станцию
-        if (newPrevStation < 0) {
-            return;
+        if (newPrevStation > 0) {
+            currentStationNumber = newPrevStation - 1;
         }
-        currentStationNumber = newPrevStation - 1;
     }
 
     public int soundVolumeLevel;
@@ -57,14 +55,14 @@ public class Radio {
         soundVolumeLevel = 100;
     }
 
-    public void setCurrentVolumeLevel(int newCurrentVolumeLevel) { // диапазон
-        if (newCurrentVolumeLevel < 0) {
+    public void setVolumeLevelRange(int newVolumeLevel) { // диапазон
+        if (newVolumeLevel < 0) {
             return;
         }
-        if (newCurrentVolumeLevel > 100) {
+        if (newVolumeLevel > 100) {
             return;
         }
-        soundVolumeLevel = newCurrentVolumeLevel;
+        soundVolumeLevel = newVolumeLevel;
     }
 
     public void setIncreaseVolume(int newCurrentVolume) { // увеличение громкости
@@ -74,7 +72,7 @@ public class Radio {
         soundVolumeLevel = newCurrentVolume;
     }
 
-    public void setIncreaseVolumeToMax(int currentMaxVolumeLevel) { // остановка на max громкости
+    public void setStopAtMaxVolume(int currentMaxVolumeLevel) { // остановка на max громкости
         if (currentMaxVolumeLevel >= 100) {
             setMaxVolume();
         }
@@ -87,9 +85,9 @@ public class Radio {
         soundVolumeLevel = currentVolume;
     }
 
-    public void setDecreaseVolumeToMin(int currentMinVolumeLevel) { // остановка на min громкости
-        if (currentMinVolumeLevel <= 0) {
-            return;
+    public void setStopAtMinVolume(int currentMinVolumeLevel) { // остановка на min громкости
+        if (currentMinVolumeLevel < 0) {
+            currentMinVolumeLevel = soundVolumeLevel;
         }
     }
 }
