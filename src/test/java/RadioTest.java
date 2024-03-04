@@ -5,7 +5,7 @@ import ru.netology.Radio.Radio;
 public class RadioTest {
 
     @Test
-    public void shouldNotExceedMaxRange() { // уход за границы max диапазона
+    public void shouldSwitchFromEndToBeginning() { // переключение с 9 на 0 станцию
         Radio radio = new Radio();
 
         radio.setStationRange(10);
@@ -17,34 +17,25 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldNotExceedMinRange() { // уход за границы min диапазона
+    public void shouldChangeToNextStation() { // переключение на следующую станцию
         Radio radio = new Radio();
 
+        radio.setStationRange(8);
+
+        radio.increaseStation();
+
+        int expected = 9;
+        int actual = radio.getCurrentStationNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldMoveFromMinToMaxStation() { // переключение с 0 на 9 станцию
+        Radio radio = new Radio();
         radio.setStationRange(-1);
 
-        int expected = 0;
-        int actual = radio.getCurrentStationNumber();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void shouldSwitchFromEndToBeginning() { // переключение с 9 на 0 станцию
-        Radio radio = new Radio();
-
-        radio.setSwitchFromEndToBeginning(10);
-
-        int expected = 0;
-        int actual = radio.getCurrentStationNumber();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void shouldChangeToNextStation() { // переключение вперед
-        Radio radio = new Radio();
-
-        radio.setIncreaseStation(8);
+        radio.moveFromMinToMaxStation();
 
         int expected = 9;
         int actual = radio.getCurrentStationNumber();
@@ -53,22 +44,12 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldSwitchFromBeginningToEnd() { // переключение с 0 на 9 станцию
+    public void shouldChangeToPrevStation() { // переключение на предыдущую станцию
         Radio radio = new Radio();
 
-        radio.setPrevStationNumber(-1);
+        radio.setStationRange(1);
 
-        int expected = 9;
-        int actual = radio.getCurrentStationNumber();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void shouldChangeToPrevStation() { // переключение назад
-        Radio radio = new Radio();
-
-        radio.setDecreaseStation(1);
+        radio.decreaseStation();
 
         int expected = 0;
         int actual = radio.getCurrentStationNumber();
@@ -91,7 +72,7 @@ public class RadioTest {
     // тесты для уровня громкости
 
     @Test
-    public void shouldNotExceedMaxVolume() { // уход за границы max диапазона
+    public void shouldStopAtMax() { // остановка на max громкости
         Radio radio = new Radio();
 
         radio.setVolumeLevelRange(101);
@@ -103,7 +84,7 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldNotExceedMinVolume() { // уход за границы min диапазона
+    public void shouldStopAtMinVolume() { // остановка на min громкости
         Radio radio = new Radio();
 
         radio.setVolumeLevelRange(-1);
@@ -130,19 +111,9 @@ public class RadioTest {
     public void shouldIncreaseVolume() { // увеличение громкости
         Radio radio = new Radio();
 
-        radio.setIncreaseVolume(99);
+        radio.setVolumeLevelRange(99);
 
-        int expected = 100;
-        int actual = radio.getSoundVolumeLevel();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void shouldStopAtMax() {  // остановка на max громкости
-        Radio radio = new Radio();
-
-        radio.setStopAtMaxVolume(101);
+        radio.increaseVolume();
 
         int expected = 100;
         int actual = radio.getSoundVolumeLevel();
@@ -154,7 +125,9 @@ public class RadioTest {
     public void shouldDecreaseVolume() { // уменьшение громкости
         Radio radio = new Radio();
 
-        radio.setDecreaseVolume(1);
+        radio.setVolumeLevelRange(1);
+
+        radio.decreaseVolume();
 
         int expected = 0;
         int actual = radio.getSoundVolumeLevel();
@@ -163,12 +136,14 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldStopAtMin() { // остановка на min громкости
+    public void shouldStopAtMaxVolume() { // остановка на max громкости
         Radio radio = new Radio();
 
-        radio.setStopAtMinVolume(-1);
+        radio.setVolumeLevelRange(100);
 
-        int expected = 0;
+        radio.stopMaxVolume();
+
+        int expected = 100;
         int actual = radio.getSoundVolumeLevel();
 
         Assertions.assertEquals(expected, actual);
