@@ -37,7 +37,7 @@ public class Radio {
         int nextStation = currentStationNumber + 1;
         setStationRange(nextStation);
     }
-gitg
+
     public void prevNumberStation() { // переключение на предыдущую станцию
         if (currentStationNumber > 0) {
             currentStationNumber = currentStationNumber - 1;
