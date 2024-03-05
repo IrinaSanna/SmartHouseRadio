@@ -23,7 +23,7 @@ public class Radio {
         currentStationNumber = newCurrentStation;
     }
 
-    public void setVolumeLevelRange(int newVolumeLevel) { // диапазон
+    public void setVolumeLevelRange(int newVolumeLevel) { // диапазон громкости
         if (newVolumeLevel < 0) {
             return;
         }
@@ -33,37 +33,32 @@ public class Radio {
         soundVolumeLevel = newVolumeLevel;
     }
 
-    public void setToMaxStationNumber() {
-        currentStationNumber = 9;
-    }
-
-    public void moveFromMinToMaxStation() { // переключение с 0 на 9 станцию
-        int lastStation = currentStationNumber;
-        setToMaxStationNumber();
-    }
-
-    public void increaseStation() { // переключение на следующую станцию
+    public void nextNumberStation() { // переключение на следующую станцию
         int nextStation = currentStationNumber + 1;
         setStationRange(nextStation);
     }
-
-    public void decreaseStation() { // переключение на предыдущую станцию
-        int prevStation = currentStationNumber - 1;
-        setStationRange(prevStation);
+gitg
+    public void prevNumberStation() { // переключение на предыдущую станцию
+        if (currentStationNumber > 0) {
+            currentStationNumber = currentStationNumber - 1;
+        } else {
+            currentStationNumber = 9;
+        }
     }
 
     public void increaseVolume() { // увеличение громкости
-        int nextVolume = soundVolumeLevel + 1;
-        setVolumeLevelRange(nextVolume);
+        if (soundVolumeLevel < 100) {
+            soundVolumeLevel = soundVolumeLevel + 1;
+        } else {
+            soundVolumeLevel = 100;
+        }
     }
 
     public void decreaseVolume() { // уменьшение громкости
-        int currentVolume = soundVolumeLevel - 1;
-        setVolumeLevelRange(currentVolume);
-    }
-
-    public void stopMaxVolume() { // остановка на max громкости
-        int maxVolume = soundVolumeLevel;
-        setVolumeLevelRange(maxVolume);
+        if (soundVolumeLevel > 0) {
+            soundVolumeLevel = soundVolumeLevel - 1;
+        } else {
+            soundVolumeLevel = 0;
+        }
     }
 }

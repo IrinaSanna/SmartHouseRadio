@@ -22,7 +22,7 @@ public class RadioTest {
 
         radio.setStationRange(8);
 
-        radio.increaseStation();
+        radio.nextNumberStation();
 
         int expected = 9;
         int actual = radio.getCurrentStationNumber();
@@ -31,11 +31,11 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldMoveFromMinToMaxStation() { // переключение с 0 на 9 станцию
+    public void shouldSwitchFromBeginningToEnd() { // переключение с 0 на 9 станцию
         Radio radio = new Radio();
         radio.setStationRange(-1);
 
-        radio.moveFromMinToMaxStation();
+        radio.prevNumberStation();
 
         int expected = 9;
         int actual = radio.getCurrentStationNumber();
@@ -49,7 +49,7 @@ public class RadioTest {
 
         radio.setStationRange(1);
 
-        radio.decreaseStation();
+        radio.prevNumberStation();
 
         int expected = 0;
         int actual = radio.getCurrentStationNumber();
@@ -72,7 +72,7 @@ public class RadioTest {
     // тесты для уровня громкости
 
     @Test
-    public void shouldStopAtMax() { // остановка на max громкости
+    public void shouldNotExceedTheMaxVolume() { // проверка границы max громкости
         Radio radio = new Radio();
 
         radio.setVolumeLevelRange(101);
@@ -84,7 +84,7 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldStopAtMinVolume() { // остановка на min громкости
+    public void shouldNotExceedTheMinVolume() { // проверка границы min громкости
         Radio radio = new Radio();
 
         radio.setVolumeLevelRange(-1);
@@ -141,9 +141,23 @@ public class RadioTest {
 
         radio.setVolumeLevelRange(100);
 
-        radio.stopMaxVolume();
+        radio.increaseVolume();
 
         int expected = 100;
+        int actual = radio.getSoundVolumeLevel();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldStopAtMinVolume() { // остановка на min громкости
+        Radio radio = new Radio();
+
+        radio.setVolumeLevelRange(0);
+
+        radio.decreaseVolume();
+
+        int expected = 0;
         int actual = radio.getSoundVolumeLevel();
 
         Assertions.assertEquals(expected, actual);
