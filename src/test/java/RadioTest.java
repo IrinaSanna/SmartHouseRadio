@@ -18,7 +18,7 @@ public class RadioTest {
 
     @Test
     public void shouldChangeToNextStation() { // переключение на следующую станцию
-        Radio radio = new Radio();
+        Radio radio = new Radio(10);
 
         radio.setStationRange(8);
 
@@ -45,7 +45,7 @@ public class RadioTest {
 
     @Test
     public void shouldChangeToPrevStation() { // переключение на предыдущую станцию
-        Radio radio = new Radio();
+        Radio radio = new Radio(2);
 
         radio.setStationRange(1);
 
